@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Bagian;
+use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -12,7 +14,7 @@ use Spatie\Permission\Models\Permission;
 class RolesAndPermissionsSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Run the database seeds.
      *
      * @return void
      */
@@ -34,13 +36,18 @@ class RolesAndPermissionsSeeder extends Seeder
                 'email' => 'admin@gmail.com',
                 'name' => 'admin web',
             ], $default_user));
-            $operator = User::create(array_merge([
-                'email' => 'operator@gmail.com',
-                'name' => 'operator',
+            $user = User::create(array_merge([
+                'email' => 'user@gmail.com',
+                'name' => 'user',
+            ], $default_user));
+            $driver = User::create(array_merge([
+                'email' => 'driver@gmail.com',
+                'name' => 'driver',
             ], $default_user));
 
-            $roleOperator = Role::create(['name' => 'operator']);
             $roleAdmin = Role::create(['name' => 'admin']);
+            Role::create(['name' => 'user']);
+            Role::create(['name' => 'driver']);
 
 
 
@@ -57,7 +64,8 @@ class RolesAndPermissionsSeeder extends Seeder
             $roleAdmin->givePermissionTo('admin');
 
 
-            $operator->assignRole('operator');
+            $user->assignRole('user');
+            $driver->assignRole('driver');
             $admin->assignRole('admin');
 
             DB::commit();

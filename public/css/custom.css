@@ -1,0 +1,608 @@
+
+@import url('https://fonts.googleapis.com/css?family=Nova+Slim&display=swap');
+
+
+body, html {
+	line-height: 1.8;
+    font-family: 'Roboto', sans-serif;
+     color: #555e58;
+	 text-transform:capitalize;
+	text-rendering: optimizeLegibility !important;
+	-webkit-font-smoothing: antialiased !important;
+	 font-weight: 400;
+	 margin:0px;
+     padding:0px;
+        background-color:#f5f4f4;
+}
+
+.g-recaptcha{
+    width: 100%;
+}
+
+a {
+	color: #333 !important;
+	font-weight: 400 !important;
+}
+
+
+ul, ol {
+	padding: 0;
+	margin:0px;
+		list-style: none;
+}
+
+
+
+
+a:hover,
+a:focus {
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+
+
+/*=======================================================
+  material-icons  copy & paste form site google material-icons
+  ==================================================*/
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://example.com/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+    local('MaterialIcons-Regular'),F
+    url(https://example.com/MaterialIcons-Regular.woff2) format('woff2'),
+    url(https://example.com/MaterialIcons-Regular.woff) format('woff'),
+    url(https://example.com/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+/*=======================================================
+  material-icons  copy & paste form site google material-icons
+  ==================================================*/
+
+
+
+.wrapper {
+	position: relative;
+    width:100%;
+    background-color:#f5f4f4;
+}
+
+
+
+
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE start
+----------------------------------------------------- */
+
+
+
+#sidebar {
+    position:fixed;
+	height:100vh!important;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index:11;
+    width: 260px;
+	overflow:auto;
+	transition:all 0.3s ;
+    /* background: #f5f4f4; */
+    background: white;
+    /* box-shadow: 0 10px 30px -12px rgb(0 0 0 / 42%), 0 4px 25px 0px rgb(0 0 0 / 12%), 0 8px 10px -5px rgb(0 0 0 / 20%); */
+}
+  .bg-login {
+      background-color: #337a2e;
+  }
+
+#sidebar::-webkit-scrollbar{
+	width:5px;
+	border-radius:10px;
+	background-color:#eee;
+	display:none;
+}
+#sidebar::-webkit-scrollbar-thumbs{
+	width:5px;
+	border-radius:10px;
+	background-color:#333;
+	display:none;
+}
+
+
+#sidebar:hover::-webkit-scrollbar{
+	display:block;
+}
+#sidebar:hover::-webkit-scrollbar-thumbs{
+	display:block;
+}
+
+#sidebar .sidebar-header {
+    padding:13px;
+	background-color:#ffffff;
+	/* border-bottom:1px solid rgb(185, 181, 181); */
+}
+
+.sidebar-header h3{
+	color:#333;
+	font-size:17px;
+	margin:0px;
+	text-transform:uppercase;
+	transition:all 0.5s ease;
+	font-weight:600;
+}
+
+.sidebar-header h3 img{
+	width:45px;
+	margin-right:10px;
+}
+
+#sidebar ul li{
+	padding:2px 7px;
+}
+
+#sidebar ul li.active>a{
+    color: #333;
+    background-color: rgba(25, 75, 212, 0.153);
+}
+
+#sidebar ul li a:hover{
+    color: #333;
+    background-color: rgba(200, 200, 200, 0.2);
+}
+
+.custom .dropdown-toggle::after {
+    position: absolute;
+    right: 10px;
+    top: 23px;
+}
+
+#sidebar ul li.drodown{
+	position:sticky;
+}
+
+.info-box1 {
+    box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+    border-radius: 0.25rem;
+    background-color: rgb(81, 84, 81);
+    display: -ms-flexbox;
+    display: flex;
+    margin-bottom: 1rem;
+    min-height: 80px;
+    position: relative;
+    color: #ffffff;
+    width: 100%;
+}
+.info-box2 {
+    box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+    border-radius: 0.25rem;
+    background-color: rgb(44, 103, 222);
+    display: -ms-flexbox;
+    display: flex;
+    margin-bottom: 1rem;
+    min-height: 80px;
+    position: relative;
+    color: #ffffff;
+    width: 100%;
+}
+.info-box3 {
+    box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+    border-radius: 0.25rem;
+    background-color: rgb(50, 126, 77);
+    display: -ms-flexbox;
+    display: flex;
+    margin-bottom: 1rem;
+    min-height: 80px;
+    position: relative;
+    color: #ffffff;
+    width: 100%;
+}
+.bg-hijau{
+    background-color: rgb(39, 98, 60);
+}
+.info-box1 .info-box-icon1,
+.info-box2 .info-box-icon2,
+.info-box3 .info-box-icon3 {
+    -ms-flex-align: center;
+    align-items: center;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 0 20px;
+    font-size: 2.875rem;
+    -ms-flex-pack: center;
+    justify-content: center;
+    text-align: center;
+    width: 70px;
+}
+
+.info-box1 .info-box-content1,
+.info-box2 .info-box-content2,
+.info-box3 .info-box-content3 {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-pack: center;
+    justify-content: center;
+    line-height: 1.8;
+    -ms-flex: 1;
+    flex: 1;
+    padding: 0 10px;
+}
+
+.info-box1 .info-box-text1,
+.info-box2 .info-box-text2,
+.info-box3 .info-box-text3,
+.info-box1 .progress-description1 {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    /* border: rgb(255, 213, 99); */
+}
+.info-box1 .info-box-number1,
+.info-box2 .info-box-number2,
+.info-box3 .info-box-number3
+ {
+    display: block;
+    /* margin-top: 0.25rem; */
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+#sidebar ul.components {    
+    padding: 17px 0;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+	line-height: 30px;
+	border-radius:5px;
+    font-size: 15px;
+	position:relative;
+    font-weight: 400;
+    display: block;
+}
+
+#sidebar ul li a span{
+	text-transform:capitalize;
+	display:inline-block;
+}
+
+#sidebar ul li a i {
+    position: relative;
+    margin-right: 10px;
+    top: 5px;
+	color: #555555;
+    margin-left: 10px;
+}
+
+
+
+
+
+/* ---------------------------------------------------
+   sidebar end
+----------------------------------------------------- */
+
+
+
+
+/*=======================================================
+   main-content navbar-design start
+   ===============================================*/
+
+
+
+#content {
+	position: relative;
+    transition: all 0.3s;
+}
+
+.top-navbar{
+	width:100%;
+	z-index:9;
+	position:relative;
+}
+
+
+.main-content{
+	padding:10px 20px 0px 20px;
+	position: relative;
+    width: 100%;
+
+    /* background-color: white; */
+}
+
+
+#sidebarCollapse{
+	border-radius:50%;
+	width:50px;
+	height:50px;
+	text-align:center;
+	/* line-height:40px; */
+	margin-right:20px;
+	border:none;
+    color: #FFFFFF;
+    background-color: white;
+    /* background-color: rgba(0, 0, 0, 0.02); */
+}
+
+#sidebarCollapse span {
+    margin: 8px;
+    padding: 0px;
+}
+
+
+
+.navbar-nav > li.active{
+   color: #FFFFFF;
+   border-radius:4px;
+    background-color: rgba(0, 0, 0, 0.08);  
+ }
+
+.navbar-nav > li > a {
+    color: #FFFFFF;
+}
+
+
+.navbar .notification {
+	 position: absolute;
+    top: 5px;
+    right: 10px;
+	display: block;
+    font-size: 9px;
+    border: 0px;
+    font-size: 10px;
+    background: #d9534f;
+    min-width: 15px;
+	 text-align: center;
+    padding: 1px 5px;
+    height: 15px;
+    border-radius: 2px;
+    line-height: 14px;
+}
+
+
+ .navbar-nav > li.show .custom .dropdown-menu {
+    transform: translate3d(0, 0, 0);
+	opacity:1;
+	visibility:visible;
+}
+
+
+.custom .dropdown-menu li > a {
+    font-size: 13px;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 2px;
+	font-weight: 400;
+    color: #000;
+    transition: all 150ms linear;
+}
+
+.navbar-nav > .active > a:focus {
+    color: #FFFFFF;
+    background-color: rgba(0, 0, 0, 0.08);
+}
+
+
+.navbar-nav li a {
+    position: relative;
+    display: block;
+    padding: 10px 15px!important;
+}
+
+/*=======================================================
+   main-content navbar-design end
+   ===============================================*/
+
+
+#sidebar.show-nav,.body-overlay.show-nav{
+	transform:translatex(0%);
+	opacity:1;
+	display:block;
+	visibility:visible;
+	z-index:15;
+}
+
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+
+@media only screen and (min-width:992px){
+	#sidebar.active {
+    width:80px;
+	height:100%!important;
+	/* position:absolute!important; */
+	overflow:visible!important;
+	top:0!important;
+	z-index:666;
+	float:left!important;
+    bottom: 0!important;
+}
+
+
+#sidebar.active .sidebar-header h3 span {
+   display:none;
+   transition:all 0.5s ease;
+}
+
+#sidebar.active ul li a span{
+    display:none;
+	transition:all 0.5s ease;
+}
+
+#sidebar.active .custom .dropdown-toggle::after {
+    display:none;
+	transition:all 0.5s ease;
+}
+
+#content {
+    width: calc(100% - 260px);
+    position: relative;
+    float: right;
+    transition: all 0.3s;
+}  
+
+#content.active {
+    width: calc(100% - 80px);
+} 
+
+#sidebar.active .menu {
+    position: absolute;
+    left: 81px;
+    background-color: white;
+    width: 180px;
+    height: auto;
+    margin: 5px 0;
+    top: 0;
+    border: 1px solid #dcd9d9;
+    z-index: 4;
+}                                                                                                                                                                                                              
+}
+
+
+@media only screen and (min-width:992px){
+.custom .dropdown-menu {
+    border: 0;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 26%);
+	transform: translate3d(0, -20px, 0);
+    visibility: hidden;
+	transition: all 150ms linear;
+    display: block;
+	min-width:15rem;
+	right: 0;
+    left: auto;
+    opacity: 0;
+}
+	
+}
+
+
+/*===============small-screen overlay sidebar design media queries==============*/
+
+@media only screen and (max-width:992px){
+#sidebar {
+    position:fixed;
+    top: 0;
+    bottom:0;
+    z-index: 10;
+    width: 260px;
+	transform:translatex(-100%);
+	transition: all 150ms linear;
+	box-shadow:none!important;
+  
+}	
+
+.body-overlay{
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	display:none;
+	visibility:hidden;
+	opacity:0;
+	z-index:3;
+	transition: all 150ms linear;
+	background-color:rgba(0,0,0,0.5);
+}
+}
+/*===============small-screen overlay sidebar design media queries==============*/
+
+
+
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+
+.table_cost td,
+th {
+    padding: 1rem;
+}
+
+.table_cost {
+    border-spacing: 0 10px;
+    border-collapse: separate;
+    width: 100%;
+}
+
+.table_cost thead tr th,
+.table_cost thead tr td,
+.table_cost tbody tr th,
+.table_cost tbody tr td {
+    vertical-align: middle;
+    border: none;
+}
+
+.table_cost thead tr th:nth-last-child(1),
+.table_cost thead tr td:nth-last-child(1),
+.table_cost tbody tr th:nth-last-child(1),
+.table_cost tbody tr td:nth-last-child(1) {
+    text-align: center;
+}
+
+.table_cost tbody tr {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+}
+
+.table_cost tbody tr td {
+    background: #ffffff;
+
+}
+
+.table_cost tbody tr td:nth-child(1) {
+    border-radius: 5px 0 0 5px;
+}
+
+.table_cost tbody tr td:nth-last-child(1) {
+    border-radius: 0 5px 5px 0;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info__img img {
+    margin-right: 15px;
+    height: 55px;
+    width: 55px;
+    border-radius: 45px;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
