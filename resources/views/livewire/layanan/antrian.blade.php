@@ -1,18 +1,14 @@
 <div>
-    @guest
-    <main class="app containerw pb-5">
-        <h5 class="font-weight-bolder">Silahkan Masuk Akun Terlebih dahulu</h5>
-        <a href="{{ route('login') }}" class="btn btn-primary btn-sm">Login app</a>
-    </main>
-    @endguest
-    @auth
+
     <main class="app containerw pb-5">
         @if ($status !== null)
         <p>Booking</p>
         <a href="{{ route('order') }}" class="btn btn-primary btn-sm">Go to Transaksi</a>
+
         @else
         <a href="{{ route('home') }}" class="btn btn-dark rounded "><i class='bx bx-message-square-detail '></i> Booking</a>
         <a href="{{ route('charter') }}" class="btn btn-light rounded mx-3 "><i class='bx bx-message-square-detail '></i> Charter Mobil</a>
+
         <form autocomplete=" off" wire:submit.prevent="create">
             <div class="pb-5 pt-3">
                 <div class="card">
@@ -21,7 +17,7 @@
                         <P>Keberangkatan Setiap Hari Jam 03:00 PM</P>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Rute</label>
-                            <select wire:model.defer="state.rute" class="form-control @error('rute') is-invalid @enderror">
+                            <select wire:model.defer="state.rute" class="form-control rute @error('rute') is-invalid @enderror">
                                 <option value="">Pilih Rute</option>
                                 <option value="Desa Saleman">Desa Saleman</option>
                                 <option value="Desa Saka">Desa Saka</option>
@@ -32,7 +28,7 @@
                                 <option value="Desa Karlutu">Desa Karlutu</option>
                                 <option value="Desa Pasanea">Desa Pasanea</option>
                             </select>
-                            <small class="form-text text-muted">We'll never share your email with anyone else.</small>
+
                             @error('titikkor')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -41,7 +37,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Jumlah Penumpang</label>
-                            <input type="number" wire:model.defer="state.jumlah_penumpang" class="form-control  @error('jumlah_penumpang') is-invalid @enderror" id=" exampleInputEmail1" aria-describedby="emailHelp" placeholder="0">
+                            <input type="number" wire:model.defer="state.jumlah_penumpang" class="form-control jumlah_penumpang  @error('jumlah_penumpang') is-invalid @enderror" id=" exampleInputEmail1" aria-describedby="emailHelp" placeholder="0">
                             <small class="form-text text-muted">Tarif Perorang Rp. 100.000</small>
                             @error('jumlah_penumpang')
                             <div class="invalid-feedback">
@@ -65,8 +61,8 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">No Tlpn</label>
-                            <input type="text" wire:model.defer="state.notlpn" class="form-control @error('notlpn') is-invalid @enderror" placeholder="08XXXX">
-                            <small class="form-text text-muted">Tarif Perorang Rp. 100.000</small>
+                            <input type="number" wire:model.defer="state.notlpn" class="form-control notlpn @error('notlpn') is-invalid @enderror" placeholder="08XXXX">
+
                             @error('notlpn')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -75,7 +71,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Alamat</label>
-                            <input type="text" wire:model.defer="state.alamat" class="form-control @error('notlpn') is-invalid @enderror" placeholder="Alamat">
+                            <input type="text" wire:model.defer="state.alamat" class="form-control alamat @error('alamat') is-invalid @enderror" placeholder="Alamat">
                             @error('alamat')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -84,15 +80,18 @@
                         </div>
                     </div>
                     <div class="card-footer">
+                        @guest
+                        <small class="form-text text-muted">Tidak Bisa <span class="badge badge-secondary">Booking</span> Silahkan <a href="{{ route('login') }}" class="ext-primary text-decoration-none">Login app</a> atau <a href="{{ route('register') }}" class="text-primary text-decoration-none">Belum Punya Akun</a> </small>
+                        @endguest
+                        @auth
                         <button type="submit" class="btn btn-success px-5">Booking Now</button>
+                        @endauth
                     </div>
                 </div>
             </div>
         </form>
         @endif
     </main>
-    @endauth
-
 </div>
 @push('js')
 <script>
@@ -109,6 +108,7 @@
 
             // Mengisi nilai dalam elemen HTML dengan id 'titikkor'
             document.getElementById('titikkor').value = `${lat},${lng}`;
+
         } else {
             return null;
         }
@@ -117,6 +117,11 @@
 <script>
     $('form').submit(function() {
         @this.set('state.titikkor', $('.titikkor').val());
+        @this.set('state.rute', $('.rute').val());
+        @this.set('state.jumlah_penumpang', $('.jumlah_penumpang').val());
+        @this.set('state.notlpn', $('.notlpn').val());
+        @this.set('state.alamat', $('.alamat').val());
+        localStorage.removeItem('titikkor');
     })
 </script>
 

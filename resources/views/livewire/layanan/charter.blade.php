@@ -8,6 +8,37 @@
             <div class="card__container swiper">
                 <div class="card__content mb-5">
                     <div class="swiper-wrapper">
+                        @forelse ($driver as $index => $bg)
+                        <article class="card__article swiper-slide">
+                            <div class="card__image">
+                                <img src="{{ $bg->avatar_url }}" alt="image" class="card__img">
+                                <div class="card__shadow"></div>
+                            </div>
+
+                            <div class="card__data">
+                                <div class="d-flex flex-row bd-highlight mb-3 align-items-end">
+                                    <div class="rounded-circle overflow-hidden" style="height: 60px; width:60px">
+                                        <img src="{{ $bg->user->avatar_url }}" class="card-img-top img-cover" alt="Raeesh">
+                                    </div>
+                                    <div class="px-3">
+                                        <h5 class="">{{$bg->user->name}}</h5>
+                                        <h6 class="card-subtitle mb-2 text-muted">{{$bg->nopolosi}}</h6>
+                                    </div>
+
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Muatan kapasitas : {{$bg->kapasitas}} orang</li>
+                                    <li class="list-group-item"></li>
+                                </ul>
+                                @guest
+                                <small class="form-text text-muted">Tidak Bisa <span class="badge badge-secondary">Booking</span> Silahkan <a href="{{ route('login') }}" class="ext-primary text-decoration-none">Login app</a> atau <a href="{{ route('register') }}" class="text-primary text-decoration-none">Belum Punya Akun</a> </small>
+                                @endguest
+                                @auth
+                                <button type="submit" class="btn btn-success px-5">Booking Now</button>
+                                @endauth
+                            </div>
+                        </article>
+                        @empty
                         <article class="card__article swiper-slide">
                             <div class="card__image">
                                 <img src="assets/1.png" alt="image" class="card__img">
@@ -19,94 +50,18 @@
                                     <div class="rounded-circle overflow-hidden" style="height: 60px; width:60px">
                                         <img src="https://i.stack.imgur.com/fcbpv.jpg?s=256&g=1" class="card-img-top img-cover" alt="Raeesh">
                                     </div>
-                                    <div class="px-3">
-                                        <h5 class="">Aliando</h5>
-                                        <h6 class="card-subtitle mb-2 text-muted">DE 5753 BF</h6>
-                                    </div>
-
+                                    <p>Not found</p>
                                 </div>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Muatan kapasitas : 7 orang</li>
-                                    <li class="list-group-item"></li>
-                                </ul>
-                                <a href="{{ route('order') }}" class="card__button text-white px-5">Booking</a>
                             </div>
                         </article>
 
-                        <article class="card__article swiper-slide">
-                            <div class="card__image">
-                                <img src="assets/2.png" alt="image" class="card__img">
-                                <div class="card__shadow"></div>
-                            </div>
-                            <div class="card__data">
-                                <div class="d-flex flex-row bd-highlight mb-3 align-items-end">
-                                    <div class="rounded-circle overflow-hidden" style="height: 60px; width:60px">
-                                        <img src="https://i.stack.imgur.com/fcbpv.jpg?s=256&g=1" class="card-img-top img-cover" alt="Raeesh">
-                                    </div>
-                                    <div class="px-3">
-                                        <h5 class="">Aliando</h5>
-                                        <h6 class="card-subtitle mb-2 text-muted">DE 5753 BF</h6>
-                                    </div>
+                        @endforelse
 
-                                </div>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Muatan kapasitas : 7 orang</li>
-                                    <li class="list-group-item"></li>
-                                </ul>
-                                <a href="{{ route('order') }}" class="card__button text-white px-5">Booking</a>
-                            </div>
-                        </article>
-                        <article class="card__article swiper-slide">
-                            <div class="card__image">
-                                <img src="assets/3.png" alt="image" class="card__img">
-                                <div class="card__shadow"></div>
-                            </div>
-                            <div class="card__data">
-                                <div class="d-flex flex-row bd-highlight mb-3 align-items-end">
-                                    <div class="rounded-circle overflow-hidden" style="height: 60px; width:60px">
-                                        <img src="https://i.stack.imgur.com/fcbpv.jpg?s=256&g=1" class="card-img-top img-cover" alt="Raeesh">
-                                    </div>
-                                    <div class="px-3">
-                                        <h5 class="">Aliando</h5>
-                                        <h6 class="card-subtitle mb-2 text-muted">DE 5753 BF</h6>
-                                    </div>
-
-                                </div>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Muatan kapasitas : 7 orang</li>
-                                    <li class="list-group-item"></li>
-                                </ul>
-                                <a href="{{ route('order') }}" class="card__button text-white px-5">Booking</a>
-                            </div>
-                        </article>
-
-                        <article class="card__article swiper-slide">
-                            <div class="card__image">
-                                <img src="assets/4.png" alt="image" class="card__img">
-                                <div class="card__shadow"></div>
-                            </div>
-                            <div class="card__data">
-                                <div class="d-flex flex-row bd-highlight mb-3 align-items-end">
-                                    <div class="rounded-circle overflow-hidden" style="height: 60px; width:60px">
-                                        <img src="https://i.stack.imgur.com/fcbpv.jpg?s=256&g=1" class="card-img-top img-cover" alt="Raeesh">
-                                    </div>
-                                    <div class="px-3">
-                                        <h5 class="">Aliando</h5>
-                                        <h6 class="card-subtitle mb-2 text-muted">DE 5753 BF</h6>
-                                    </div>
-
-                                </div>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Muatan kapasitas : 7 orang</li>
-                                    <li class="list-group-item"></li>
-                                </ul>
-                                <a href="{{ route('order') }}" class="card__button text-white px-5">Booking</a>
-                            </div>
-                        </article>
                     </div>
                 </div>
                 <!-- Pagination -->
                 <div class="swiper-pagination"></div>
+         
             </div>
         </div>
     </main>

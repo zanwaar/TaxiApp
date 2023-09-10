@@ -6,7 +6,7 @@
         <a href="{{ route('home') }}" class="btn btn-primary btn-sm">Booking Now</a>
         @else
         <form autocomplete=" off" wire:submit.prevent="create">
-            <div class="pb-5 pt-2">
+            <div class="pt-2">
                 <div class="alert alert-warning" role="alert">
                     <h4 class="alert-heading">Status Booking...! </h4>
                     <hr>
@@ -52,6 +52,38 @@
                 </div>
             </div>
         </form>
+
+        <div class="card">
+            <div class="card-body">
+                @if ($order->driver === null)
+                <style>
+                    svg {
+                        width: 100px;
+                        height: 100px;
+                        margin: 0;
+                        display: inline-block;
+                    }
+                </style>
+                <p class="text-muted">Sedang Mencari Driver Untuk Anda
+                    <span class="ml-2">
+                        <svg version="1.1" id="L4" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 0 0" xml:space="preserve">
+                            <circle fill="#2D4356" stroke="none" cx="6" cy="50" r="6">
+                                <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.1" />
+                            </circle>
+                            <circle fill="#2D7ABE" stroke="none" cx="26" cy="50" r="6">
+                                <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.2" />
+                            </circle>
+                            <circle fill="#2D4356" stroke="none" cx="46" cy="50" r="6">
+                                <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.3" />
+                            </circle>
+                        </svg>
+                    </span>
+                </p>
+                @else
+                <h3>Taxi Driver</h3>
+                @endif
+            </div>
+        </div>
         @endif
         @else
         <p>Anda Belum Lakukan Booking</p>

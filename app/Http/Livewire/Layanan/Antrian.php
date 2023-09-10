@@ -12,7 +12,6 @@ class Antrian extends Component
     public $state = [];
     public function create()
     {
-
         Validator::make(
             $this->state,
             [

@@ -11,7 +11,7 @@ use Ramsey\Uuid\DeprecatedUuidMethodsTrait;
 use Spatie\Permission\Traits\HasRoles;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable 
 {
     use HasFactory,
         Notifiable,

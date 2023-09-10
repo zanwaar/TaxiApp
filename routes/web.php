@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\ActivityLog\ActivityLog;
 use App\Http\Livewire\Admin\Dashboard;
 use App\Http\Livewire\Admin\Driver;
+use App\Http\Livewire\Admin\Transaksi;
 use App\Http\Livewire\Bagian\ListBagian;
 use App\Http\Livewire\Barang\ListBarang;
 use App\Http\Livewire\Layanan\Antrian;
@@ -41,6 +42,7 @@ Route::get('charter', Charter::class)->name('charter');
 
 Route::middleware(['auth'])->group(function () {
 
+    Route::get('transaksi', Transaksi::class)->name('transaksi');
     Route::get('order', Order::class)->name('order');
 
     Route::get('dashboard', Dashboard::class)->name('dashboard');

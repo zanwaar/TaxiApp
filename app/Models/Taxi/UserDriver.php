@@ -6,6 +6,7 @@ use App\Models\User;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class UserDriver extends Model
 {
@@ -49,5 +50,17 @@ class UserDriver extends Model
         ];
 
         return $badges[$this->aktif];
+    }
+    protected $appends = [
+        'avatar_url',
+    ];
+
+    public function getAvatarUrlAttribute()
+    {
+        if ($this->fotokend && Storage::disk('avatars')->exists($this->fotokend)) {
+            return Storage::disk('avatars')->url($this->fotokend);
+        }
+
+        return asset('noimage.png');
     }
 }
