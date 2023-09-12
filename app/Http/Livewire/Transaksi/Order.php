@@ -3,11 +3,24 @@
 namespace App\Http\Livewire\Transaksi;
 
 use App\Models\Taxi\Order as TaxiOrder;
+use App\Models\Taxi\UserDriver;
 use Livewire\Component;
 
 class Order extends Component
 {
     public $idBeingRemoved = null;
+
+    protected $listeners = ['updatedPaymentStatus' => 'updatedPaymentStatus'];
+
+    public function updatedPaymentStatus()
+    {
+        $latestOrder = TaxiOrder::latest()->with(['driver'])->where('user_id', auth()->user()->id)->first();
+        $order = $latestOrder;
+        $order->status = 'Aktif';
+        $order->save();
+        // Optionally, you can emit a Livewire event to refresh the component or show a success message
+        $this->dispatchBrowserEvent('alert', ['message' => 'Pembayaran berhasil! Terima kasih atas pesanan Anda.']);
+    }
 
     public function delete()
     {
@@ -25,10 +38,29 @@ class Order extends Component
     }
     public function getOrderProperty()
     {
-        return TaxiOrder::latest()->with(['driver'])->first();
+        return TaxiOrder::latest()->with(['driver'])->where('user_id', auth()->user()->id)->first();
+    }
+
+    public function getDriverProperty()
+    {
+        $id = "default";
+        if ($this->order) {
+            if ($this->order->driver) {
+                $id = $this->order->driver->id;
+            }
+        }
+        return UserDriver::with(['user'])->where('id', $id)->first();
     }
     public function render()
     {
-        return view('livewire.transaksi.order', ['order' => $this->order]);
+        $snapToken = null;
+        $driver = null;
+        if ($this->order) {
+            $snapToken = $this->order->snap_token;
+            if ($this->order->driver) {
+                $driver = $this->Driver;
+            }
+        }
+        return view('livewire.transaksi.order', ['order' => $this->order, 'driver' => $driver, 'snapToken' => $snapToken]);
     }
 }

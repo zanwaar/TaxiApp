@@ -10,7 +10,7 @@
             </form>
         </div>
 
-
+  
         <div class="row pb-5">
             <div class="col-md-3 mb-3">
                 <div class=" card">
@@ -178,7 +178,7 @@
                 </div>
                 <!-- /.col -->
                 <div class="col-md-8">
-                    <div class="card" x-data="{ currentTab: $persist('profile') }">
+                    <div class="card" x-data="{ currentTab: $persist('profile') }"> 
                         <div class="card-header p-2">
                             <ul class="nav nav-pills" wire:ignore>
                                 <li @click.prevent="currentTab = 'profile'" class="nav-item"><a class="nav-link" :class="currentTab === 'profile' ? 'active text-white' : ''" href="#profile" data-toggle="tab"><i class="fa fa-user mr-1"></i> Edit Profile</a></li>
@@ -293,7 +293,7 @@
     }
 </style>
 @endpush
-
+   
 @push('alpine-plugins')
 <!-- Alpine Plugins -->
 <script defer src="https://unpkg.com/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>

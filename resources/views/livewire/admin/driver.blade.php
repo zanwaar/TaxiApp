@@ -93,28 +93,126 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Kapasitas</label>
-                                    <input type="text" wire:model.defer="state.kapasitas" class="form-control @error('kapasitas') is-invalid @enderror" id="kapasitas" aria-describedby="nameHelp" placeholder="No Polisi">
-                                    @error('kapasitas')
+                                <h3>Data Kendaran</h3>
+                                <div class="form-row">
+                                    <div class="form-group col-md-8">
+                                        <label for="name">No polisi</label>
+                                        <input type="text" wire:model.defer="state.nopolisi" class="form-control @error('nopolisi') is-invalid @enderror" id="nopolisi" aria-describedby="nameHelp" placeholder="No Polisi">
+                                        @error('nopolisi')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="name">Kapasitas</label>
+                                        <input type="text" wire:model.defer="state.kapasitas" class="form-control @error('kapasitas') is-invalid @enderror" id="kapasitas" aria-describedby="nameHelp" placeholder="Kapsitas">
+                                        @error('kapasitas')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+
+                                </div>
+                                <div class="form-group ">
+                                    <label for="name">No STNK</label>
+                                    <input type="text" wire:model.defer="state.no_stnk" class="form-control @error('no_stnk') is-invalid @enderror" id="no_stnk" aria-describedby="nameHelp" placeholder="No STNK">
+                                    @error('no_stnk')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                     @enderror
                                 </div>
-                                <div class="form-group">
-                                    <label for="name">No polisi</label>
-                                    <input type="text" wire:model.defer="state.nopolisi" class="form-control @error('nopolisi') is-invalid @enderror" id="nopolisi" aria-describedby="nameHelp" placeholder="No Polisi">
-                                    @error('nopolisi')
+                                <div class="form-group ">
+                                    <label for="name">No SIM</label>
+                                    <input type="text" wire:model.defer="state.no_sim" class="form-control @error('no_sim') is-invalid @enderror" id="no_sim" aria-describedby="nameHelp" placeholder="No SIM">
+                                    @error('no_sim')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                     @enderror
                                 </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="name">Jenis Mobil</label>
+                                        <input type="text" wire:model.defer="state.jenis_mobil" class="form-control @error('jenis_mobil') is-invalid @enderror" id="jenis_mobil" aria-describedby="nameHelp" placeholder="Jenis Mobil">
+                                        @error('jenis_mobil')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="name">Nama Kepemilikan</label>
+                                        <input type="text" wire:model.defer="state.nama_kepemilikan" class="form-control @error('nama_kepemilikan') is-invalid @enderror" id="nama_kepemilikan" aria-describedby="nameHelp" placeholder="Nama Kepemilikan">
+                                        @error('nama_kepemilikan')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                @if($showEditModal)
                                 <div class="form-group">
-                                    <label for="name">Name</label>
+                                    <label for="exampleInputEmail1">Status</label>
+                                    <select wire:model.defer="state.aktif" class="form-control aktif @error('aktif') is-invalid @enderror">
+                                        <option value="0" {{ ($state['aktif']  === 0 ) ? 'selected' : '' }}>NoAktif</option>
+                                        <option value="1" {{ ($state['aktif']  === 1 ) ? 'selected' : '' }}>Aktif</option>
+                                        <option value="2" {{ ($state['aktif']  === 1 ) ? 'selected' : '' }}>Sedang Beroperasi</option>
+                                    </select>
+
+                                    @error('aktif')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                                @endif
+
+                                <div class="form-group">
+                                    <label for="customFile">Photo Kendaraan</label>
+                                    <div class="custom-file">
+                                        <div x-data="{ isUploading: false, progress: 5 }" x-on:livewire-upload-start="isUploading = true" x-on:livewire-upload-finish="isUploading = false; progress = 5" x-on:livewire-upload-error="isUploading = false" x-on:livewire-upload-progress="progress = $event.detail.progress">
+                                            <input wire:model="photokend" type="file" class="custom-file-input" id="customFile">
+                                            <div x-show.transition="isUploading" class="progress progress-sm mt-2 rounded">
+                                                <div class="progress-bar bg-primary progress-bar-striped" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" x-bind:style="`width: ${progress}%`">
+                                                    <span class="sr-only">40% Complete (success)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <label class="custom-file-label" for="customFile">
+                                            @if ($photokend)
+                                            {{ $photokend->getClientOriginalName() }}
+                                            @else
+                                            Choose Image
+                                            @endif
+                                        </label>
+                                    </div>
+
+                                    @if ($photokend)
+                                    <img src="{{ $photokend->temporaryUrl() }}" class="img d-block mt-2 w-100 rounded">
+                                    @else
+                                    <img src="{{asset('storage/avatars')}}/{{  $state['fotokend'] ?? '' }}" class="img d-block mb-2 w-100 rounded">
+                                    @endif
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <h3>Data Penguna</h3>
+                                <div class="form-group">
+                                    <label for="name">Nama Lengkap</label>
                                     <input type="text" wire:model.defer="state.name" class="form-control @error('name') is-invalid @enderror" id="name" aria-describedby="nameHelp" placeholder="Enter full name">
                                     @error('name')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">No Tlpn</label>
+                                    <input type="text" wire:model.defer="state.no_tlpn" class="form-control @error('no_tlpn') is-invalid @enderror" id="no_tlpn" aria-describedby="no_tlpnHelp" placeholder="No Tlpn">
+                                    @error('no_tlpn')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -145,8 +243,6 @@
                                     <label for="passwordConfirmation">Confirm Password</label>
                                     <input type="password" wire:model.defer="state.password_confirmation" class="form-control" id="passwordConfirmation" placeholder="Confirm Password">
                                 </div>
-                            </div>
-                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="customFile">Profile Photo</label>
                                     <div class="custom-file">
@@ -175,32 +271,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="customFile">Photo Kendaraan</label>
-                                    <div class="custom-file">
-                                        <div x-data="{ isUploading: false, progress: 5 }" x-on:livewire-upload-start="isUploading = true" x-on:livewire-upload-finish="isUploading = false; progress = 5" x-on:livewire-upload-error="isUploading = false" x-on:livewire-upload-progress="progress = $event.detail.progress">
-                                            <input wire:model="photokend" type="file" class="custom-file-input" id="customFile">
-                                            <div x-show.transition="isUploading" class="progress progress-sm mt-2 rounded">
-                                                <div class="progress-bar bg-primary progress-bar-striped" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" x-bind:style="`width: ${progress}%`">
-                                                    <span class="sr-only">40% Complete (success)</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <label class="custom-file-label" for="customFile">
-                                            @if ($photokend)
-                                            {{ $photokend->getClientOriginalName() }}
-                                            @else
-                                            Choose Image
-                                            @endif
-                                        </label>
-                                    </div>
 
-                                    @if ($photokend)
-                                    <img src="{{ $photokend->temporaryUrl() }}" class="img d-block mt-2 w-100 rounded">
-                                    @else
-                                    <!-- <img src="{{ $state['avatar_url'] ?? '' }}" class="img d-block mb-2 w-100 rounded"> -->
-                                    @endif
-                                </div>
                             </div>
                         </div>
                     </div>

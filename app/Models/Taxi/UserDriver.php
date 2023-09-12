@@ -29,15 +29,14 @@ class UserDriver extends Model
     protected $guarded = [];
     const STATUS_TRUE = 1;
     const STATUS_FALSE = 0;
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+    const STATUS_B = 2;
+
     public function getStatusBadgeAttribute()
     {
         $badges = [
             $this::STATUS_TRUE => 'success',
             $this::STATUS_FALSE => 'danger',
+            $this::STATUS_B => 'dark',
         ];
 
         return $badges[$this->aktif];
@@ -47,14 +46,24 @@ class UserDriver extends Model
         $badges = [
             $this::STATUS_TRUE => 'Aktif',
             $this::STATUS_FALSE => 'NoAktif',
+            $this::STATUS_B => 'Sedang Beroperasi',
         ];
-
         return $badges[$this->aktif];
     }
+    
     protected $appends = [
         'avatar_url',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'id', 'user_driver_id');
+    }
+   
     public function getAvatarUrlAttribute()
     {
         if ($this->fotokend && Storage::disk('avatars')->exists($this->fotokend)) {

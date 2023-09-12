@@ -73,5 +73,11 @@
     $('[x-ref="changePasswordLink"]').on("click", function () {
         localStorage.setItem("_x_currentTab", '"changePassword"');
     });
+    $('[x-ref="charterLink"]').on("click", function () {
+        localStorage.setItem("_x_currentTab", '"charter"');
+    });
+    $('[x-ref="bookingLink"]').on("click", function () {
+        localStorage.setItem("_x_currentTab", '"booking"');
+    });
     /******/
 })();

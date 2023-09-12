@@ -57,12 +57,12 @@
 
 <body>
     <livewire:layanan.maps />
-  <div id="map"></div>
+    <div id="map"></div>
     <script>
-        const map = L.map('map').fitWorld();
+        const map = L.map('map').setView([-3.2996841227648264, 128.95615696907046], 17);
 
         const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
+            maxZoom: 17,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
 
@@ -96,9 +96,10 @@
 
             // Check if "titikkor" is already saved in localStorage
             const savedTitikkor = getSavedTitikkor();
+            const et = {"lat":-3.2997376780088175,"lng":128.956071138382};
 
             // Create a draggable marker and add it to the layer group
-            locationMarker = L.marker(savedTitikkor || e.latlng, {
+            locationMarker = L.marker(savedTitikkor || [-3.2996841227648264, 128.95615696907046], {
                 draggable: true
             }).addTo(locationGroup);
 
@@ -106,7 +107,7 @@
             // locationCircle = L.circle(savedTitikkor || e.latlng, radius).addTo(locationGroup);
 
             // Set the view to the marker's location
-            map.setView(savedTitikkor || e.latlng, 18);
+            map.setView(savedTitikkor || [-3.2996841227648264, 128.95615696907046], 18);
 
             // Listen for the 'drag' event on the marker
             locationMarker.on('drag', () => {
@@ -116,7 +117,8 @@
             });
 
             // Set the initial lat and lng values to the input field
-            updateAndSaveTitikkor(savedTitikkor || e.latlng);
+
+            updateAndSaveTitikkor(savedTitikkor || et);
         }
 
         function onLocationError(e) {

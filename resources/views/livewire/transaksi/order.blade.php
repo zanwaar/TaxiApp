@@ -2,21 +2,20 @@
     <main class="app containerw pb-5">
         @if ($order)
         @if ($order->status === 'selesai')
-        <p>Anda Belum Lakukan Booking</p>
-        <a href="{{ route('home') }}" class="btn btn-primary btn-sm">Booking Now</a>
+        <h4>Order Masih Kosong</h4>
+        <a href="{{ route('home') }}" class="btn btn-primary  btn-sm">Booking Now</a>
         @else
-        <form autocomplete=" off" wire:submit.prevent="create">
+        <form autocomplete=" off" wire:submit.prevent="">
             <div class="pt-2">
-                <div class="alert alert-warning" role="alert">
-                    <h4 class="alert-heading">Status Booking...! </h4>
+                <div class="alert {{ $order->status == 'Aktif' ? 'alert-success' : 'alert-primary' }}" role="alert">
+                    <h4 class="alert-heading">Status Booking...! <span class="badge badge-light">{{$order->status}}</span></h4>
                     <hr>
-                    <p class="mb-0">Satu Langkah lagi Silahkan Lakukan Pembayaran Untuk status Booking</p>
+                    <p class="mb-0">Informasi</p>
                 </div>
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <h4>Detail Booking</h4>
-                            <button type="submit" class="btn btn-info btn-sm">Edit Booking</button>
                         </div>
                         <form>
                             <div class="form-row">
@@ -43,10 +42,18 @@
                                 <input type="text" class="form-control" readonly value="{{ $order->alamat }}">
                             </div>
 
-                            <button type="submit" class="btn btn-success btn-sm">Pembayaran</button>
-                            <button type="button" wire:click="confirmRemoval({{ $order }})" class="btn btn-danger btn-sm">Batal Booking</button>
-                            <small class="form-text text-muted">Pembatalan Order di bisa di lakukan ......</small>
+
                         </form>
+                        <div class="d-flex justify-content-start">
+
+                            @if ($order->status == 'Menunggu Pembayaran')
+                            <button class="btn btn-primary btn-sm mr-2" id="pay-button">Pembayaran</button>
+                            @endif
+                            <button type="button" wire:click="confirmRemoval({{ $order }})" class="btn btn-danger btn-sm">Batal Booking</button>
+
+                        </div>
+
+                        <small class="form-text text-muted">Pembatalan Order di bisa di lakukan ......</small>
                     </div>
 
                 </div>
@@ -55,7 +62,7 @@
 
         <div class="card">
             <div class="card-body">
-                @if ($order->driver === null)
+                @if ($driver === null)
                 <style>
                     svg {
                         width: 100px;
@@ -64,7 +71,8 @@
                         display: inline-block;
                     }
                 </style>
-                <p class="text-muted">Sedang Mencari Driver Untuk Anda
+                <h4>Keberangkatan Setiap Hari Jam 03:00 PM</h4>
+                <p class="text-muted">Sedang Dalam Antrian, Segera Lakukan Pembayaran 
                     <span class="ml-2">
                         <svg version="1.1" id="L4" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 0 0" xml:space="preserve">
                             <circle fill="#2D4356" stroke="none" cx="6" cy="50" r="6">
@@ -81,6 +89,16 @@
                 </p>
                 @else
                 <h3>Taxi Driver</h3>
+                <div class="border border-dark rounded shadow-sm" style="position: relative;">
+                    <img src="{{ $driver->user->avatar_url }}" style="border-radius: 50%; height: 80px; width:80px;   position:absolute; top:10px; left:10px" alt="Raeesh">
+                    <img src="{{ $driver->avatar_url }}" alt="image" class="card__img">
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Nama Driver : {{$driver->user->name}}</li>
+                    <li class="list-group-item ">Nomor Polisi : <span class="bg-secondary px-1 rounded">{{$driver->nopolisi}}</span></li>
+                    <li class="list-group-item">Muatan kapasitas : {{$driver->kapasitas}} orang</li>
+                </ul>
+
                 @endif
             </div>
         </div>
@@ -110,3 +128,33 @@
         </div>
     </div>
 </div>
+@push('js')
+<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}"></script>
+<script>
+    document.addEventListener("livewire:load", function() {
+        const payButton = document.querySelector('#pay-button');
+
+        if (payButton) {
+            payButton.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                snap.pay('{{ $snapToken }}', {
+                    onSuccess: function(result) {
+                        // Callback ketika pembayaran berhasil
+                        console.log(result);
+                        Livewire.emit('updatedPaymentStatus');
+                        Livewire.emit('booking');
+                    },
+                    onPending: function(result) {
+                        console.log(result);
+                    },
+                    onError: function(result) {
+                        console.log(result);
+                    },
+
+                });
+            });
+        }
+    });
+</script>
+@endpush

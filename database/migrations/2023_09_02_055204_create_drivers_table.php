@@ -16,8 +16,14 @@ class CreateDriversTable extends Migration
         Schema::create('user_drivers', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('user_id')->constrained()->cascadeOnDelete();
-            $table->string('fotokend');
+            $table->string('nama');
+            $table->string('no_tlpn');
             $table->string('nopolisi');
+            $table->string('no_stnk');
+            $table->string('no_sim');
+            $table->string('jenis_mobil');
+            $table->string('nama_kepemilikan');
+            $table->string('fotokend');
             $table->string('kapasitas');
             $table->string('aktif');
             $table->timestamps();

@@ -4,12 +4,12 @@ namespace App\Http\Livewire\Layanan;
 
 use App\Models\Taxi\UserDriver;
 use Livewire\Component;
-
+ 
 class Charter extends Component
 {
     public function getDriverProperty()
     {
-        return UserDriver::latest()->with(['user'])->get();
+        return UserDriver::latest()->with(['user'])->where('aktif', '!=', '2')->get();
     }
     public function render()
     {

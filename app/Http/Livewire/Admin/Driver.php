@@ -51,6 +51,11 @@ class Driver extends AppComponent
             $this->state,
             [
                 'nopolisi' => 'required',
+                'no_stnk' => 'required',
+                'no_sim' => 'required',
+                'jenis_mobil' => 'required',
+                'no_tlpn' => 'required|numeric',
+                'nama_kepemilikan' => 'required',
                 'kapasitas' => 'required|numeric',
                 'name' => 'required',
                 'email' => 'required|email|unique:users',
@@ -79,6 +84,11 @@ class Driver extends AppComponent
                     'user_id' => $user->id,
                     'fotokend' => $photokendaraan,
                     'nopolisi' => $this->state['nopolisi'],
+                    'no_tlpn' => $this->state['no_tlpn'],
+                    'no_stnk' => $this->state['no_stnk'],
+                    'no_sim' => $this->state['no_sim'],
+                    'jenis_mobil' => $this->state['jenis_mobil'],
+                    'nama_kepemilikan' => $this->state['nama_kepemilikan'],
                     'kapasitas' => $this->state['kapasitas'],
                     'aktif' => 0,
                 ]
@@ -88,7 +98,7 @@ class Driver extends AppComponent
             DB::rollBack();
             throw $th;
         }
-        // dd($this->state);
+        // dd($this->state); 
 
         // $this->dispatchBrowserEvent('alert', ['message' => 'Berhasil Ditambahkan Cek lOG Tamu Hari Ini']);
         $this->reset();
@@ -102,6 +112,11 @@ class Driver extends AppComponent
             "user_id" => $par["user_id"],
             "fotokend" => $par["fotokend"],
             "nopolisi" => $par["nopolisi"],
+            "no_sim" => $par["no_sim"],
+            "no_tlpn" => $par["no_tlpn"],
+            "no_stnk" => $par["no_stnk"],
+            "jenis_mobil" => $par["jenis_mobil"],
+            "nama_kepemilikan" => $par["nama_kepemilikan"],
             "kapasitas" => $par["kapasitas"],
             "aktif" => $par["aktif"],
             "name" => $par["user"]["name"],
@@ -120,7 +135,7 @@ class Driver extends AppComponent
 
         $this->dispatchBrowserEvent('show-form');
     }
-    public function updateUser()
+    public function update()
     {
         $UpdateDetails = User::where('email', $this->state['email'])->first();
 
@@ -131,43 +146,53 @@ class Driver extends AppComponent
         }
 
         if ($this->photo) {
-            Storage::disk('avatars')->delete($this->user->avatar);
+            Storage::disk('avatars')->delete($UpdateDetails->avatar);
             $validatedData['avatar'] = $this->photo->store('/', 'avatars');
         }
 
+        $profile = $UpdateDetails->avatar;
+        if ($this->photo) {
+            $profile =  $this->photo->store('/', 'avatars');
+        }
+        $photokendaraan = $UpdateDrivers->fotokend;
+        if ($this->photokend) {
+            $photokendaraan =  $this->photokend->store('/', 'avatars');
+        }
         Validator::make(
             $this->state,
             [
                 'nopolisi' => 'required',
+                'no_stnk' => 'required',
+                'no_sim' => 'required',
+                'jenis_mobil' => 'required',
+                'no_tlpn' => 'required|numeric',
+                'nama_kepemilikan' => 'required',
                 'kapasitas' => 'required|numeric',
                 'name' => 'required',
-                'email' => 'required|email|unique:users',
-                'password' => 'required|confirmed',
+                'email' => 'required|email|unique:users,email,' .   $UpdateDetails->id,
+                // 'password' => 'sometimes|confirmed',
             ],
         )->validate();
         DB::beginTransaction();
         try {
-            $profile = null;
-            if ($this->photo) {
-                $profile =  $this->photo->store('/', 'avatars');
-            }
-            $photokendaraan = null;
-            if ($this->photokend) {
-                $photokendaraan =  $this->photokend->store('/', 'avatars');
-            }
             $UpdateDetails->update([
                 'name' => $this->state['name'],
                 'email' => $this->state['email'],
                 'avatar' => $profile,
-                'password' => bcrypt($this->state['password']),
+                // 'password' => bcrypt($this->state['password']),
             ]);
             $UpdateDrivers->update(
                 [
-                    'user_id' => $user->id,
+                    'user_id' => $UpdateDetails->id,
                     'fotokend' => $photokendaraan,
                     'nopolisi' => $this->state['nopolisi'],
+                    'no_stnk' => $this->state['no_stnk'],
+                    'no_sim' => $this->state['no_sim'],
+                    'no_tlpn' => $this->state['no_tlpn'],
+                    'jenis_mobil' => $this->state['jenis_mobil'],
+                    'nama_kepemilikan' => $this->state['nama_kepemilikan'],
                     'kapasitas' => $this->state['kapasitas'],
-                    'aktif' => 0,
+                    'aktif' => $this->state['aktif'],
                 ]
             );
             DB::commit();

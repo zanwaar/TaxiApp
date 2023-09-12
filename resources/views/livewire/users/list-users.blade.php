@@ -101,7 +101,7 @@
                                         <td>
                                             <a href="" wire:click.prevent="edit({{ $user }})">
                                                 <i class="fa fa-edit mr-2"></i>
-                                            </a>
+                                            </a> 
 
                                             <a href="" wire:click.prevent="confirmUserRemoval({{ $user }})">
                                                 <i class="fa fa-trash text-danger"></i>

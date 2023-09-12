@@ -35,10 +35,13 @@
             </div>
 
             <ul class="list-unstyled components custom">
-                <li class="{{ request()->is('dashboard') | request()->is('/')  ? 'active' : '' }}">
+                <!-- <li class="{{ request()->is('dashboard') | request()->is('/')  ? 'active' : '' }}">
                     <a href="{{ route('dashboard') }}" class="dashboard"><i class="material-icons">dashboard</i><span>Dashboard</span></a>
-                </li>
+                </li> -->
 
+                <li class="{{ request()->is('transaksi') ? 'active' : '' }}">
+                    <a href="{{ route('transaksi') }}"><i class="material-icons">sync_alt</i><span>Transaksi</span></a>
+                </li>
                 <li class="{{ request()->is('driver') ? 'active' : '' }}">
                     <a href="{{ route('driver') }}"><i class="material-icons">recent_actors</i><span>Driver</span></a>
                 </li>
@@ -76,11 +79,8 @@
     </div>
     <script src="{{asset('js/app.js')}}"></script>
     <script src="{{asset('js/backend.js')}}"></script>
-
-    @stack('js')
-    @stack('before-livewire-scripts')
     <livewire:scripts />
-    @stack('after-livewire-scripts')
+    @stack('js')
     @stack('alpine-plugins')
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </body>
@@ -111,9 +111,53 @@
 <body>
     <header class="headerw" id="headerw">
         <nav class="navw containerw">
-            <a href="#" class="navw__logo">AppTaxi</a>
-            <x-nav></x-nav>
-            <img src="" alt="" class="navw__img">
+            <a href="#" class="navw__logo"> <img src="{{asset('assets/logo.png')}}" alt="" class="img-fluid"></a>
+            <div class="navw__menu" id="navw-menu">
+                <ul class="navw__list" style="padding-left: 0px !important;  margin-bottom: 0px !important;">
+                    @role('driver')
+                    <!-- <li class="navw__item">
+                        <a href="{{ route('beranda') }}" class="navw__link {{ request()->is('beranda') ? 'active-link' : '' }}">
+                            <i class='bx bx-home-alt navw__icon'></i>
+                            <span class=" navw__name">Beranda</span>
+                        </a>
+                    </li> -->
+                    <li class="navw__item">
+                        <a href="{{ route('orderan') }}" class="navw__link {{ request()->is('orderan') | request()->is('/') ? 'active-link' : '' }}">
+                            <i class='bx bx-home-alt navw__icon'></i>
+                            <span class=" navw__name">Beranda</span>
+                        </a>
+                    </li>
+                    <li class="navw__item">
+                        <a href="{{ route('profile.edit') }}" class="navw__link {{ request()->is('profile') ? 'active-link' : '' }}">
+                            <i class='bx bx-user navw__icon'></i>
+                            <span class="navw__name">Profile</span>
+                        </a>
+                    </li>
+
+                    @else
+                    <li class="navw__item">
+                        <a href="{{ route('home') }}" class="navw__link {{ request()->is('charter') | request()->is('home') | request()->is('/') ? 'active-link' : '' }}">
+                            <i class='bx bx-home-alt navw__icon'></i>
+                            <span class=" navw__name">Beranda</span>
+                        </a>
+                    </li>
+                    <li class="navw__item ">
+                        <a href="{{ route('order') }}" class="navw__link {{ request()->is('order') ? 'active-link' : '' }}">
+                            <i class='bx bx-briefcase-alt navw__icon'></i>
+                            <span class="navw__name">Transaksi</span>
+                        </a>
+                    </li>
+                    <li class="navw__item">
+                        <a href="{{ route('profile.edit') }}" class="navw__link {{ request()->is('profile') ? 'active-link' : '' }}">
+                            <i class='bx bx-user navw__icon'></i>
+                            <span class="navw__name">Profile</span>
+                        </a>
+                    </li>
+
+                    @endrole
+
+                </ul>
+            </div>
         </nav>
     </header>
     {{ $slot }}

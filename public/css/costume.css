@@ -117,6 +117,7 @@ img {
 .navw__logo {
     color: var(--title-color);
     font-weight: 600;
+    width: 200px;
 }
  .app {
      margin-top: 100px;
@@ -172,8 +173,10 @@ img {
 /*Active link*/
 .active-link {
     position: relative;
-    color: var(--first-color);
-    border-radius: 50%;
+    color: #FFF;
+    border-radius: 5px;
+    padding: 1px 10px 1px 10px;
+    background-color: rgb(4, 125, 255);
     transition: .3s;
 }
 

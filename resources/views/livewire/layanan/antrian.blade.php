@@ -1,12 +1,12 @@
 <div>
 
     <main class="app containerw pb-5">
-        @if ($status !== null)
+        @if ($status === 'selesai')
         <p>Booking</p>
         <a href="{{ route('order') }}" class="btn btn-primary btn-sm">Go to Transaksi</a>
 
         @else
-        <a href="{{ route('home') }}" class="btn btn-dark rounded "><i class='bx bx-message-square-detail '></i> Booking</a>
+        <a href="{{ route('home') }}" class="btn btn-primary rounded "><i class='bx bx-message-square-detail '></i> Booking</a>
         <a href="{{ route('charter') }}" class="btn btn-light rounded mx-3 "><i class='bx bx-message-square-detail '></i> Charter Mobil</a>
 
         <form autocomplete=" off" wire:submit.prevent="create">
@@ -50,7 +50,7 @@
                             <div class="input-group">
                                 <input type="text" name="titikkor" readonly id="titikkor" wire:model.defer="state.titikkor" class="form-control titikkor @error('titikkor') is-invalid @enderror" placeholder="Titik Penjemputan" aria-describedby="button-addon2">
                                 <div class="input-group-append">
-                                    <a href="{{ route('maps') }}" class="btn btn-danger" id="button-addon2">Maps</a>
+                                    <a href="{{ route('maps') }}" class="btn btn-outline-primary " id="button-addon2">Go Maps</a>
                                 </div>
                             </div>
                             @error('titikkor')
@@ -84,7 +84,7 @@
                         <small class="form-text text-muted">Tidak Bisa <span class="badge badge-secondary">Booking</span> Silahkan <a href="{{ route('login') }}" class="ext-primary text-decoration-none">Login app</a> atau <a href="{{ route('register') }}" class="text-primary text-decoration-none">Belum Punya Akun</a> </small>
                         @endguest
                         @auth
-                        <button type="submit" class="btn btn-success px-5">Booking Now</button>
+                        <button type="submit" class="btn btn-outline-primary px-5">Booking Now</button>
                         @endauth
                     </div>
                 </div>
