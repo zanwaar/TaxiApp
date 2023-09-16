@@ -10,6 +10,12 @@ use Livewire\Component;
 class Orderan extends Component
 {
     public $idorderfield;
+    public $konf;
+    public function refreshPage()
+    {
+        // Fungsi ini akan merefresh halaman
+        $this->emit('refreshPage');
+    }
     public function getDriverProperty()
     {
         return UserDriver::where('user_id',  auth()->user()->id)->first();
@@ -18,32 +24,55 @@ class Orderan extends Component
     {
         return Order::latest()->with(['user', 'driver'])
             ->where('status', '!=', 'selesai')
+            ->where('status', '!=', 'Batal')
             ->where('user_driver_id', $this->driver->id)->get();
     }
     public function confirmRemoval($id)
     {
         $this->idorderfield = $id["id"];
-
+        $this->konf = true;
+        $this->dispatchBrowserEvent('show-delete-modal');
+    }
+    public function confirm($id)
+    {
+        $this->idorderfield = $id["id"];
+        $this->konf = false;
         $this->dispatchBrowserEvent('show-delete-modal');
     }
     public function konfirmasi()
     {
-        $order = Order::findOrFail($this->idorderfield);
-        $driver = UserDriver::where('id', $order->user_driver_id)->first();
-        DB::beginTransaction();
-        try {
-            $order->update([
-                'status' => 'selesai',
-            ]);
-            $driver->update([
-                'aktif' => 1,
-            ]);
-            DB::commit();
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            throw $th;
+        if ($this->konf) {
+            $order = Order::findOrFail($this->idorderfield);
+            $driver = UserDriver::where('id', $order->user_driver_id)->first();
+            DB::beginTransaction();
+            try {
+                $order->update([
+                    'status' => 'selesai',
+                ]);
+                $driver->update([
+                    'aktif' => 1,
+                ]);
+                DB::commit();
+            } catch (\Throwable $th) {
+                DB::rollBack();
+                throw $th;
+            }
+            $this->dispatchBrowserEvent('hide-delete-modal', ['message' => 'Orderan Telah di selesaikan!']);
+        } else {
+            $order = Order::findOrFail($this->idorderfield);
+            $driver = UserDriver::where('id', $order->user_driver_id)->first();
+            DB::beginTransaction();
+            try {
+                $driver->update([
+                    'aktif' => 2,
+                ]);
+                DB::commit();
+            } catch (\Throwable $th) {
+                DB::rollBack();
+                throw $th;
+            }
+            $this->dispatchBrowserEvent('hide-delete-modal', ['message' => 'Orderan Telah di Terima']);
         }
-        $this->dispatchBrowserEvent('hide-delete-modal', ['message' => 'Orderan Telah di selesaikan!']);
     }
     public function render()
     {

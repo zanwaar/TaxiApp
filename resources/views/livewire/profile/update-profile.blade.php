@@ -10,12 +10,11 @@
             </form>
         </div>
 
-  
         <div class="row pb-5">
             <div class="col-md-3 mb-3">
                 <div class=" card">
                     <div class="card-body box-profile">
-                        <div class="text-center" x-data="{ imagePreview: '{{ auth()->user()->avatar_url }}' }">
+                        <div class="d-flex justify-content-center" x-data="{ imagePreview: '{{ auth()->user()->avatar_url }}' }">
                             <input wire:model="image" type="file" class="d-none" x-ref="image" x-on:change="
                                         reader = new FileReader();
                                         reader.onload = (event) => {
@@ -24,7 +23,7 @@
                                         };
                                         reader.readAsDataURL($refs.image.files[0]);
                                     " />
-                            <img x-on:click="$refs.image.click()" class="" x-bind:src="imagePreview ? imagePreview : '/backend/dist/img/user4-128x128.jpg'" alt="User profile picture">
+                            <img x-on:click="$refs.image.click()" style="width: 200px; height auto;" x-bind:src="imagePreview ? imagePreview : '/backend/dist/img/user4-128x128.jpg'" alt="User profile picture">
                         </div>
                         <h3 class="profile-username text-center">{{ auth()->user()->name }}</h3>
                         <p class="text-muted text-center">{{ auth()->user()->roles[0]->name}}</p>
@@ -178,7 +177,7 @@
                 </div>
                 <!-- /.col -->
                 <div class="col-md-8">
-                    <div class="card" x-data="{ currentTab: $persist('profile') }"> 
+                    <div class="card" x-data="{ currentTab: $persist('profile') }">
                         <div class="card-header p-2">
                             <ul class="nav nav-pills" wire:ignore>
                                 <li @click.prevent="currentTab = 'profile'" class="nav-item"><a class="nav-link" :class="currentTab === 'profile' ? 'active text-white' : ''" href="#profile" data-toggle="tab"><i class="fa fa-user mr-1"></i> Edit Profile</a></li>
@@ -293,7 +292,7 @@
     }
 </style>
 @endpush
-   
+
 @push('alpine-plugins')
 <!-- Alpine Plugins -->
 <script defer src="https://unpkg.com/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>

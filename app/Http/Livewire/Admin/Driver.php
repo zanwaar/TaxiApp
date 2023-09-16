@@ -90,7 +90,7 @@ class Driver extends AppComponent
                     'jenis_mobil' => $this->state['jenis_mobil'],
                     'nama_kepemilikan' => $this->state['nama_kepemilikan'],
                     'kapasitas' => $this->state['kapasitas'],
-                    'aktif' => 0,
+                    'aktif' => 1,
                 ]
             );
             DB::commit();

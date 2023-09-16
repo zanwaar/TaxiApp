@@ -1,6 +1,6 @@
 <x-app-layout>
     @role('admin')
-    <livewire:admin.dashboard />
+    <livewire:admin.transaksi />
     @endrole
     @role('user')
     <livewire:layanan.antrian />

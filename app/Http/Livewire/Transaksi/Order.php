@@ -10,13 +10,14 @@ class Order extends Component
 {
     public $idBeingRemoved = null;
 
+
     protected $listeners = ['updatedPaymentStatus' => 'updatedPaymentStatus'];
 
     public function updatedPaymentStatus()
     {
         $latestOrder = TaxiOrder::latest()->with(['driver'])->where('user_id', auth()->user()->id)->first();
         $order = $latestOrder;
-        $order->status = 'Aktif';
+        $order->status = 'Pembayaran Telah Berhasil!';
         $order->save();
         // Optionally, you can emit a Livewire event to refresh the component or show a success message
         $this->dispatchBrowserEvent('alert', ['message' => 'Pembayaran berhasil! Terima kasih atas pesanan Anda.']);
@@ -25,17 +26,21 @@ class Order extends Component
     public function delete()
     {
         $user = TaxiOrder::findOrFail($this->idBeingRemoved);
-
-        $user->delete();
+        $user->update([
+            'status' => 'Batal',
+        ]);
+        // $user->delete();
         redirect()->route('home');
         $this->reset();
         $this->dispatchBrowserEvent('hide-delete-modal', ['message' => 'Booking deleted successfully!']);
     }
+
     public function confirmRemoval($id)
     {
         $this->idBeingRemoved = $id['id'];
         $this->dispatchBrowserEvent('show-delete-modal');
     }
+
     public function getOrderProperty()
     {
         return TaxiOrder::latest()->with(['driver'])->where('user_id', auth()->user()->id)->first();

@@ -30,22 +30,26 @@ class ChaterBooking extends Component
         $params = [
             'transaction_details' => [
                 'order_id' => $this->idpay,
-                'gross_amount' => 10000, // Ganti dengan jumlah yang sesuai
+                'gross_amount' => 1000000, // Ganti dengan jumlah yang sesuai
             ],
             'customer_details' => [
                 'first_name' => auth()->user()->name,
                 'email' => auth()->user()->email,
-                'phone' => '081234567890',
             ],
             'callbacks' => [
                 'finish' => 'http://kilat.fun/buy'
             ],
         ];
+        $kapasitasDriver = $this->driver->kapasitas;
         Validator::make(
             $this->state,
             [
                 'rute' => 'required',
-                'jumlah_penumpang' => 'required|numeric|max:20',
+                'jumlah_penumpang' => [
+                    'required',
+                    'numeric',
+                    "max:$kapasitasDriver", // Gunakan nilai kapasitasDriver dalam validasi
+                ],
                 'titikkor' => 'required',
                 'notlpn' => 'required|numeric',
                 'alamat' => 'required',
@@ -66,7 +70,7 @@ class ChaterBooking extends Component
                     'alamat' => $this->state['alamat'],
                     'status' => "Menunggu Pembayaran",
                     'layanan' => "Charter Mobil",
-                    'total_price' => 10000,
+                    'total_price' => 1000000,
                     'snap_token' =>  $this->snapToken,
                 ]
             );

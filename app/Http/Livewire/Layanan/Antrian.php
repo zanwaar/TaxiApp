@@ -13,6 +13,9 @@ class Antrian extends Component
     public $state = [];
     public $snapToken;
     public $idpay;
+    public $jumlahPenumpang;
+    public $totalTarif;
+
     public function create()
     {
         Config::$serverKey = config('services.midtrans.server_key');
@@ -21,10 +24,11 @@ class Antrian extends Component
         Config::$is3ds = true;
 
         $this->idpay = uniqid();
+        $this->totalTarif = 100000 *  $this->state['jumlah_penumpang'];
         $params = [
             'transaction_details' => [
                 'order_id' => $this->idpay,
-                'gross_amount' => 10000, // Ganti dengan jumlah yang sesuai
+                'gross_amount' =>  $this->totalTarif, // Ganti dengan jumlah yang sesuai
             ],
             'customer_details' => [
                 'first_name' => auth()->user()->name,
@@ -39,7 +43,7 @@ class Antrian extends Component
             $this->state,
             [
                 'rute' => 'required',
-                'jumlah_penumpang' => 'required|numeric|max:20',
+                'jumlah_penumpang' => 'required|numeric||min:1|max:20',
                 'titikkor' => 'required',
                 'notlpn' => 'required|numeric',
                 'alamat' => 'required',
@@ -60,7 +64,7 @@ class Antrian extends Component
                     'alamat' => $this->state['alamat'],
                     'status' => "Menunggu Pembayaran",
                     'layanan' => "Booking",
-                    'total_price' => 10000,
+                    'total_price' =>   $this->totalTarif,
                     'snap_token' =>  $this->snapToken,
                 ]
             );
@@ -75,16 +79,24 @@ class Antrian extends Component
         $this->reset();
         $this->dispatchBrowserEvent('alert', ['message' => 'Booking Lagi Diproses']);
     }
+
     public function render()
     {
         if (auth()->user() !== null) {
-            $status = DB::table('orders')
+            $data = DB::table('orders')
                 ->select('status')
                 ->where('user_id', auth()->user()->id)
+                ->latest() // Untuk mengambil data terakhir berdasarkan tanggal pembuatan
                 ->first();
+            if ($data) {
+                $status = $data->status;
+            } else {
+                $status = 'kosong';
+            }
         } else {
-            $status =  null;
+            $status =  'kosong';
         }
+        // dd($status);
         return view('livewire.layanan.antrian', ["status" => $status]);
     }
 }

@@ -1,5 +1,6 @@
 <div>
     <main class="app containerw pb-5">
+        @if ($status == 'Batal' || $status == 'selesai' || $status == null)
         <a href="{{ route('home') }}" class="btn btn-light rounded "><i class='bx bx-message-square-detail '></i> Booking</a>
         <a href="{{ route('charter') }}" class="btn btn-primary rounded mx-3 "><i class='bx bx-message-square-detail '></i> Charter Mobil</a>
         <h3 class="pt-3">Charter Mobil</h3>
@@ -48,6 +49,20 @@
 
             </div>
         </div>
+        @else
+        <div class="card">
+            <div class="card-body">
+                <h1 class="display-4 text-center ">TAXI RUTE</h1>
+                <div class="text-center">
+                    <a href="{{ route('order') }}" class="btn btn-primary btn-sm ">Go to Transaksi</a>
+                </div>
+                <img src="{{asset('assets/bus.svg')}}" alt="User Image" srcset="" class="img-fluid">
+            </div>
+        </div>
+
+
+        @endif
+
     </main>
 </div>
 @push('css')

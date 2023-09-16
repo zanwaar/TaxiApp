@@ -21,16 +21,16 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="border border-dark rounded shadow-sm" style="position: relative;">
-                                    <img src="{{ $driver->user->avatar_url }}" style="border-radius: 50%; height: 80px; width:80px;   position:absolute; top:10px; left:10px" alt="Raeesh">
+                                    <img src="{{ $driver->user->avatar_url }}" style="border-radius: 50%; height: 80px; width:80px;   position:absolute; top:5px; left:5px; z-index: 99;" alt="Raeesh">
                                     <img src="{{ $driver->avatar_url }}" alt="image" class="card__img">
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">Nama Driver : {{$driver->user->name}}</li>
-                                    <li class="list-group-item">Muatan NoTlpn : {{$driver->notlpn}} orang</li>
                                     <li class="list-group-item ">Nomor Polisi : <span class="bg-secondary px-1 rounded">{{$driver->nopolisi}}</span></li>
                                     <li class="list-group-item">Muatan kapasitas : {{$driver->kapasitas}} orang</li>
                                 </ul>
                                 <hr>
+                                <h4 class="text-muted">Biaya Charter Rp 1.000.000 </h4>
 
 
                             </div>

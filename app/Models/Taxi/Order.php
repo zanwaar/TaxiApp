@@ -28,7 +28,9 @@ class Order extends Model
     protected $guarded = [];
 
     const STATUS_MENUNGGU_PEMBAYARAN = 'Menunggu Pembayaran';
+    const STATUS_MENUNGGU_PEMBAYARAN_SELESAI = 'Pembayaran Telah Berhasil!';
     const STATUS_AKTID = 'Aktif';
+    const STATUS_BATAL = 'Batal';
     const STATUS_SUCCESS = 'selesai';
     const STATUS_BEROPERASI = 'Sedang Beroperasi';
 
@@ -36,26 +38,18 @@ class Order extends Model
     const TYPE_BOOKING = 'Booking';
 
     public function getStatusBadgeAttribute()
-    {
-        $badges = [
-            $this::STATUS_AKTID => 'primary',
-            $this::STATUS_MENUNGGU_PEMBAYARAN => 'warning',
-            $this::STATUS_SUCCESS => 'success',
-            $this::STATUS_BEROPERASI => 'secondary',
-        ];
+    { {
+            $badges = [
+                $this::STATUS_BATAL => 'danger',
+                $this::STATUS_AKTID => 'primary',
+                $this::STATUS_MENUNGGU_PEMBAYARAN => 'warning',
+                $this::STATUS_MENUNGGU_PEMBAYARAN_SELESAI => 'primary',
+                $this::STATUS_SUCCESS => 'success',
+                $this::STATUS_BEROPERASI => 'secondary',
+            ];
 
-        return $badges[$this->status];
-    }
-    public function getStatusBadgeBookingAttribute()
-    {
-        $badges = [
-            $this::STATUS_MENUNGGU_PEMBAYARAN => 'warning',
-            $this::STATUS_AKTID => 'primary',
-            $this::STATUS_SUCCESS => 'success',
-            $this::STATUS_BEROPERASI => 'secondary',
-        ];
-
-        return $badges[$this->status];
+            return $badges[$this->status];
+        }
     }
 
     public function user()

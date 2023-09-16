@@ -1,11 +1,8 @@
 <div>
 
     <main class="app containerw pb-5">
-        @if ($status === 'selesai')
-        <p>Booking</p>
-        <a href="{{ route('order') }}" class="btn btn-primary btn-sm">Go to Transaksi</a>
 
-        @else
+        @if ($status == 'Batal' || $status == 'selesai' || $status == null)
         <a href="{{ route('home') }}" class="btn btn-primary rounded "><i class='bx bx-message-square-detail '></i> Booking</a>
         <a href="{{ route('charter') }}" class="btn btn-light rounded mx-3 "><i class='bx bx-message-square-detail '></i> Charter Mobil</a>
 
@@ -13,7 +10,7 @@
             <div class="pb-5 pt-3">
                 <div class="card">
                     <div class="card-body">
-                        <h4>Booking</h4>
+                        <p>Booking </p>
                         <P>Keberangkatan Setiap Hari Jam 03:00 PM</P>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Rute</label>
@@ -37,8 +34,10 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Jumlah Penumpang</label>
-                            <input type="number" wire:model.defer="state.jumlah_penumpang" class="form-control jumlah_penumpang  @error('jumlah_penumpang') is-invalid @enderror" id=" exampleInputEmail1" aria-describedby="emailHelp" placeholder="0">
+                            <input type="number" wire:model.defer="state.jumlah_penumpang" id="jumlahPenumpang" class="form-control jumlah_penumpang  @error('jumlah_penumpang') is-invalid @enderror" id=" exampleInputEmail1" aria-describedby="emailHelp" placeholder="0">
                             <small class="form-text text-muted">Tarif Perorang Rp. 100.000</small>
+
+                            <input type="hidden" wire:model.defer="state.totalTarif" id="totalTarif" class="total">
                             @error('jumlah_penumpang')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -84,12 +83,23 @@
                         <small class="form-text text-muted">Tidak Bisa <span class="badge badge-secondary">Booking</span> Silahkan <a href="{{ route('login') }}" class="ext-primary text-decoration-none">Login app</a> atau <a href="{{ route('register') }}" class="text-primary text-decoration-none">Belum Punya Akun</a> </small>
                         @endguest
                         @auth
-                        <button type="submit" class="btn btn-outline-primary px-5">Booking Now</button>
+                        <p></p>
+                        <button type="submit" class="btn btn-primary">Booking Now </button>
                         @endauth
                     </div>
                 </div>
             </div>
         </form>
+        @else
+        <div class="card">
+            <div class="card-body">
+                <h1 class="display-4 text-center ">TAXI RUTE</h1>
+                <div class="text-center">
+                    <a href="{{ route('order') }}" class="btn btn-primary btn-sm ">Go to Transaksi</a>
+                </div>
+                <img src="{{asset('assets/bus.svg')}}" alt="User Image" srcset="" class="img-fluid">
+            </div>
+        </div>
         @endif
     </main>
 </div>
@@ -115,12 +125,41 @@
     })
 </script>
 <script>
+    document.addEventListener('livewire:load', function() {
+        const jumlahPenumpangInput = document.getElementById('jumlahPenumpang');
+        const totalTarifSpan = document.getElementById('totalTarif');
+        const totalTarifSpans = document.getElementById('totalTarifs');
+
+        // Tarif per orang
+        const tarifPerOrang = 100000;
+
+        // Fungsi untuk menghitung dan memperbarui total tarif
+        function updateTotalTarif() {
+            const jumlahPenumpang = parseInt(jumlahPenumpangInput.value) || 0;
+            const totalTarif = jumlahPenumpang * tarifPerOrang;
+
+            totalTarifSpans.textContent = 'Rp. ' + totalTarif.toLocaleString();
+            totalTarifSpan.value = totalTarif;
+
+            // Simpan total tarif dalam localStorage
+            localStorage.setItem('totalTarif', totalTarif);
+        }
+
+        // Event listener saat input berubah
+        jumlahPenumpangInput.addEventListener('input', updateTotalTarif);
+
+        // Panggil fungsi pertama kali untuk menginisialisasi total tarif
+        updateTotalTarif();
+    });
+</script>
+<script>
     $('form').submit(function() {
         @this.set('state.titikkor', $('.titikkor').val());
         @this.set('state.rute', $('.rute').val());
         @this.set('state.jumlah_penumpang', $('.jumlah_penumpang').val());
         @this.set('state.notlpn', $('.notlpn').val());
         @this.set('state.alamat', $('.alamat').val());
+        @this.set('state.totalTarif', $('.total').val());
         localStorage.removeItem('titikkor');
     })
 </script>
