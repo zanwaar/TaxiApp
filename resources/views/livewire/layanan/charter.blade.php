@@ -29,6 +29,12 @@
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">Muatan kapasitas : {{$bg->kapasitas}} orang</li>
+                                    <li class="list-group-item">Rating: {{ number_format($bg->averageRating(), 1)  }}
+                                        <div class="star-rating">
+                                            @for ($i = 1; $i <= 5; $i++) <i class="{{ number_format($bg->averageRating(), 1) >= $i ? 'fas fa-star' : 'far fa-star' }}"  data-rating="{{ $i }}"></i>
+                                                @endfor
+                                        </div>
+                                    </li>
                                 </ul>
                                 @guest
                                 <small class="form-text text-muted">Tidak Bisa <span class="badge badge-secondary">Booking</span> Silahkan <a href="{{ route('login') }}" class="ext-primary text-decoration-none">Login app</a> atau <a href="{{ route('register') }}" class="text-primary text-decoration-none">Belum Punya Akun</a> </small>
@@ -66,8 +72,20 @@
     </main>
 </div>
 @push('css')
+<style>
+    .star-rating {
+        line-height: 32px;
+        font-size: 1.25em;
+    }
+
+    .star-rating .fas {
+        color: yellow;
+    }
+</style>
 <link href="{{ asset('assets/css/swiper-bundle.min.css') }}" rel="stylesheet">
+
 @endpush
+
 @push('js')
 <script src="{{ asset('assets/js/swiper-bundle.min.js') }}" defer></script>
 <script src="{{ asset('assets/js/main.js') }}" defer></script>

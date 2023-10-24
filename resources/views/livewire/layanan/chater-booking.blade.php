@@ -11,7 +11,7 @@
 
         @else
 
-        <a href="{{ route('charter') }}" class="btn btn-outline-primary rounded btn-sm ">Kembali</a>
+        <a href="{{ route('charter') }}" class="btn btn-dark rounded px-2">Kembali</a>
 
         <form autocomplete=" off" wire:submit.prevent="create">
             <div class="pb-5 pt-3">
@@ -25,6 +25,12 @@
                                     <img src="{{ $driver->avatar_url }}" alt="image" class="card__img">
                                 </div>
                                 <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Rating: {{ number_format($driver->averageRating(), 1)  }}
+                                        <div class="star-rating">
+                                            @for ($i = 1; $i <= 5; $i++) <i class="{{ number_format($driver->averageRating(), 1) >= $i ? 'fas fa-star' : 'far fa-star' }}" data-rating="{{ $i }}"></i>
+                                                @endfor
+                                        </div>
+                                    </li>
                                     <li class="list-group-item">Nama Driver : {{$driver->user->name}}</li>
                                     <li class="list-group-item ">Nomor Polisi : <span class="bg-secondary px-1 rounded">{{$driver->nopolisi}}</span></li>
                                     <li class="list-group-item">Muatan kapasitas : {{$driver->kapasitas}} orang</li>
@@ -116,6 +122,19 @@
         @endif
     </main>
 </div>
+@push('css')
+<style>
+    .star-rating {
+        line-height: 32px;
+        font-size: 1.25em;
+    }
+
+    .star-rating .fas {
+        color: yellow;
+    }
+</style>
+
+@endpush
 @push('js')
 <script>
     document.addEventListener('livewire:load', function() {

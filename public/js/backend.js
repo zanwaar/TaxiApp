@@ -9,6 +9,9 @@
             positionClass: "toast-top-right",
             progressBar: true,
         };
+        window.addEventListener("hide-form-tanpa-tos", function (event) {
+            $("#form").modal("hide");
+        });
         window.addEventListener("hide-form", function (event) {
             $("#form").modal("hide");
             $("#Diambil").modal("hide");
@@ -72,6 +75,9 @@
     });
     $('[x-ref="changePasswordLink"]').on("click", function () {
         localStorage.setItem("_x_currentTab", '"changePassword"');
+    });
+    $('[x-ref="driverLink"]').on("click", function () {
+        localStorage.setItem("_x_currentTab", '"driver"');
     });
     $('[x-ref="charterLink"]').on("click", function () {
         localStorage.setItem("_x_currentTab", '"charter"');

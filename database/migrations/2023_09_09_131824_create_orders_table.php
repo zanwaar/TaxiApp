@@ -18,6 +18,7 @@ class CreateOrdersTable extends Migration
             $table->string('payment_id')->unique();
             $table->foreignUuid('user_id')->constrained()->cascadeOnDelete();
             $table->Uuid('user_driver_id')->nullable();
+            $table->Uuid('ratings_id')->nullable();
             $table->string('layanan');
             $table->string('rute');
             $table->string('jumlah_penumpang');
@@ -25,6 +26,7 @@ class CreateOrdersTable extends Migration
             $table->string('notlpn');
             $table->string('alamat');
             $table->string('status');
+            $table->date('date');
             $table->decimal('total_price', 10, 2);
             $table->string('snap_token', 36)->nullable();
             $table->timestamps();

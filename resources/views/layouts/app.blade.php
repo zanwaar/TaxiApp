@@ -6,12 +6,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <link rel="icon" type="image/svg+xml" href="{{ setting('logo_url') ?? '' }}" />
-    <title>{{ setting('site_title') }} | {{ setting('site_name') }}</title>
+    <link rel="icon" type="image/svg+xml" href="https://demo.themesberg.com/landwind/images/logo.svg" />
+    <title>DrivGo - Taxi Online Terpercaya</title>
     @stack('jsheader')
     <link rel="stylesheet" href="{{asset('css/custom.css')}}">
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     @stack('styles')
+    @stack('css')
     <livewire:styles />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,9 +32,13 @@
         <div class="body-overlay"></div>
         <nav id="sidebar" class="shadow-sm">
             <div class="sidebar-header ">
-                <img src="{{asset('assets/logo.png')}}" alt="User Image" srcset="" class="img-fluid">
-            </div>
+                <p class="text-center">
+                    <img src="https://demo.themesberg.com/landwind/images/logo.svg" class="mr-3" width="50%" alt="DraivGo Logo" />
 
+                </p>
+            </div>
+            <p class="text-center text-xl text-bold m-0">DrivGo</p>
+            <hr class="mb-0 p-0">
             <ul class="list-unstyled components custom">
                 <!-- <li class="{{ request()->is('dashboard') | request()->is('/')  ? 'active' : '' }}">
                     <a href="{{ route('dashboard') }}" class="dashboard"><i class="material-icons">dashboard</i><span>Dashboard</span></a>
@@ -94,8 +99,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
+    <link rel="icon" type="image/svg+xml" href="https://demo.themesberg.com/landwind/images/logo.svg" />
+    <title>DrivGo - Taxi Online Terpercaya</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
     @livewireStyles
     <link href="{{ asset('assets/css/styles.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -111,7 +117,10 @@
 <body>
     <header class="headerw" id="headerw">
         <nav class="navw containerw">
-            <a href="#" class="navw__logo"> <img src="{{asset('assets/logo.png')}}" alt="" class="img-fluid"></a>
+            <a href="#" class="navw__logo">
+                <img src="https://demo.themesberg.com/landwind/images/logo.svg" class="mr-3" alt="DraivGo Logo" />
+                <span class="text-lg">DraivGo</span>
+            </a>
             <div class="navw__menu" id="navw-menu">
                 <ul class="navw__list" style="padding-left: 0px !important;  margin-bottom: 0px !important;">
                     @role('driver')
@@ -125,6 +134,12 @@
                         <a href="{{ route('orderan') }}" class="navw__link {{ request()->is('orderan') | request()->is('/') ? 'active-link' : '' }}">
                             <i class='bx bx-home-alt navw__icon'></i>
                             <span class=" navw__name">Beranda</span>
+                        </a>
+                    </li>
+                    <li class="navw__item ">
+                        <a href="{{ route('dtransaksi') }}" class="navw__link {{ request()->is('dtransaksi')  ? 'active-link' : '' }}">
+                            <i class='bx bx-briefcase-alt navw__icon'></i>
+                            <span class="navw__name">Transaksi</span>
                         </a>
                     </li>
                     <li class="navw__item">
@@ -142,7 +157,7 @@
                         </a>
                     </li>
                     <li class="navw__item ">
-                        <a href="{{ route('order') }}" class="navw__link {{ request()->is('order') ? 'active-link' : '' }}">
+                        <a href="{{ route('order') }}" class="navw__link {{ request()->is('order') |  request()->is('history') ? 'active-link' : '' }}">
                             <i class='bx bx-briefcase-alt navw__icon'></i>
                             <span class="navw__name">Transaksi</span>
                         </a>
@@ -160,7 +175,9 @@
             </div>
         </nav>
     </header>
-    {{ $slot }}
+    <div>
+        {{ $slot }}
+    </div>
 
     <script src="{{asset('js/app.js')}}"></script>
     <script src="{{asset('js/backend.js')}}"></script>

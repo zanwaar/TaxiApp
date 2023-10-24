@@ -68,6 +68,12 @@
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
 
+        var mapbox = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoianNhbWppZCIsImEiOiJjbG51ZWkyazMwY3E0MnFvMnhyOHVtMnA5In0.X8PjtoCM-nWNqz-sIOALoA', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+                '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            id: 'mapbox/satellite-v9'
+        });
         // Create a layer group to hold the draggable marker and circle
         const locationGroup = L.layerGroup().addTo(map);
 
@@ -104,7 +110,7 @@
             };
 
             // Create a draggable marker and add it to the layer group
-            locationMarker = L.marker(savedTitikkor || et , {
+            locationMarker = L.marker(savedTitikkor || et, {
                 draggable: true
             }).addTo(locationGroup);
 

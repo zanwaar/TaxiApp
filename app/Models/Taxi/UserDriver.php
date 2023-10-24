@@ -2,6 +2,7 @@
 
 namespace App\Models\Taxi;
 
+use App\Models\Rating;
 use App\Models\User;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -50,7 +51,7 @@ class UserDriver extends Model
         ];
         return $badges[$this->aktif];
     }
-    
+
     protected $appends = [
         'avatar_url',
     ];
@@ -63,7 +64,7 @@ class UserDriver extends Model
     {
         return $this->belongsTo(Order::class, 'id', 'user_driver_id');
     }
-   
+
     public function getAvatarUrlAttribute()
     {
         if ($this->fotokend && Storage::disk('avatars')->exists($this->fotokend)) {
@@ -71,5 +72,10 @@ class UserDriver extends Model
         }
 
         return asset('noimage.png');
+    }
+    public function averageRating()
+    {
+        return Rating::where('user_driver_id', $this->id)->avg('rating');
+      
     }
 }

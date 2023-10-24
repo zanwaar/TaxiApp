@@ -10,10 +10,10 @@ class AppComponent extends Component
 
     use WithPagination;
 
-    protected $paginationTheme = 'bootstrap';
+    protected $paginationTheme = 'simple-bootstrap';
 
     public $searchTerm = null;
-    public $trow = 5;
+    public $trow = 10;
 
     protected $queryString = ['searchTerm' => ['except' => '']];
 

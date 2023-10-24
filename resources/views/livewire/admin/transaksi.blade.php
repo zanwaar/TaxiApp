@@ -8,7 +8,7 @@
             </div>
             <div class="card">
                 <div class="card-header">
-                    <div class="d-flex flex-row">
+                    <div class="d-flex justify-content-between flex-row">
                         <div class="col-1">
                             <select wire:change="row($event.target.value)" class="form-control rounded shadow-sm mr-3">
                                 <option value="5">5</option>
@@ -19,6 +19,11 @@
                                 <option value="100">100</option>
                             </select>
                         </div>
+                        <div class="di">
+                            <button class="{{ $filter == 'today' ? 'btn btn-warning ' : 'btn btn-outline-warning' }} text-bold" wire:click="filter('today')">Hari ini</button>
+                            <button class="{{ $filter == 'all' ? 'btn btn-warning ' : 'btn btn-outline-warning' }} text-bold" w wire:click="filter('all')">Tampilkan Semua</button>
+                        </div>
+
                     </div>
                 </div>
                 <div class="card-body">
@@ -50,7 +55,7 @@
                                 @if ($order->driver)
                                 <td>{{ $order->driver->nopolisi }}</td>
                                 @else
-                                @if ($order->status != 'Batal')
+                                @if ($order->date != now()->toDateString())
                                 <td>
                                     <a href="" wire:click.prevent="confirm({{ $order }})">
                                         <span class=" badge badge-pill badge-dark">konfirmasi Driver</span>
@@ -58,7 +63,7 @@
                                 </td>
                                 @else
                                 <td>
-                                    -
+                                    <span class=" badge badge-pill badge-warning">pendding</span>
                                 </td>
                                 @endif
 
@@ -95,43 +100,46 @@
     <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore.self>
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5>Driver</h5>
+                <div class="modal-header d-flex justify-content-between">
+                    <div>
+                        <h3>Antrian Driver</h3>
+                    </div>
+                    <div class="div">
+                        <p>Jumlah Penumpang <span class="ml-2 bg-danger px-3 rounded pb-1"> {{$jml}}</span></p>
+
+                    </div>
                 </div>
 
                 <div class="modal-body">
                     @if ($drivers)
-                    <table class="table_cost table-responsive-md ">
+
+                    <table class="table table-responsive-md table-striped">
                         <thead>
                             <tr>
+                                <th scope="col">Nomor Antrian</th>
                                 <th scope="col">Nama Driver</th>
-                                <th scope="col">Nomor Polisi</th>
                                 <th scope="col">Kapasitas</th>
-                                <th scope="col">Status</th>
+                                <th scope="col">Sisa</th>
                                 <th style="width: 8px;">Options</th>
                             </tr>
                         </thead>
                         <tbody wire:loading.class="text-muted">
                             @forelse ($data as $index => $bg)
+
                             <tr>
-
+                                <td style="width: 10px;">{{ $orders->firstItem() + $index  }}</td>
                                 <td>
-                                    @if ($bg->user->avatar)
-                                    <img src="{{ $bg->user->avatar_url }}" style="width: 70px; height:70px" class="img img-circle mr-1" alt="">
-                                    @else
-                                    <img src="https://ui-avatars.com/api/?background=5F9DF7&color=fff&name={{$bg->user->name}}" style="width: 70px; " class="img img-circle mr-1" alt="">
-
-                                    @endif
                                     <span class="mr-2">{{ $bg->user->name }}</span>
                                 </td>
-                                <td>{{ $bg->nopolisi }}</td>
                                 <td>{{ $bg->kapasitas }}</td>
-                                <td><span class="badge badge-pill  badge-{{ $bg->status_badge }}">{{ $bg->status }}</span></td>
+                                <td class="badge text-bold badge-dark px-4" style="font-size: 18px;">{{ $bg->kapasitas - ($bg->order->total_penumpang ?? 0) }}</td>
+
                                 <td>
                                     <div class="btn-group btn-group-sm">
-                                        <button wire:click="confirmRemoval({{ $bg }})" class="btn btn-primary">Pilih</button>
+                                        <button wire:click="confirmRemoval({{ $bg }})" class="btn btn-primary px-3">Pilih</button>
                                     </div>
                                 </td>
+
                             </tr>
                             @empty
                             <tr class="text-center">

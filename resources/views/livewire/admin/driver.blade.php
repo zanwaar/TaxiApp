@@ -151,7 +151,7 @@
                                             {{ $message }}
                                         </div>
                                         @enderror
-                                    </div>
+                                    </div> 
                                 </div>
                                 @if($showEditModal)
                                 <div class="form-group">
@@ -181,7 +181,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <label class="custom-file-label" for="customFile">
+                                        <label class="custom-file-label" for="customFile"> 
                                             @if ($photokend)
                                             {{ $photokend->getClientOriginalName() }}
                                             @else
@@ -217,7 +217,7 @@
                                         {{ $message }}
                                     </div>
                                     @enderror
-                                </div>
+                                </div> 
 
                                 <div class="form-group">
                                     <label for="email">Email address</label>

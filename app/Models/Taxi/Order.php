@@ -2,6 +2,7 @@
 
 namespace App\Models\Taxi;
 
+use App\Models\Rating;
 use App\Models\User;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -30,9 +31,10 @@ class Order extends Model
     const STATUS_MENUNGGU_PEMBAYARAN = 'Menunggu Pembayaran';
     const STATUS_MENUNGGU_PEMBAYARAN_SELESAI = 'Pembayaran Telah Berhasil!';
     const STATUS_AKTID = 'Aktif';
+    const STATUS_TIMEOUT = 'Timeout';
     const STATUS_BATAL = 'Batal';
     const STATUS_SUCCESS = 'selesai';
-    const STATUS_BEROPERASI = 'Sedang Beroperasi';
+    const STATUS_BEROPERASI = 'Terima';
 
     const TYPE_CHARTER = 'Charter';
     const TYPE_BOOKING = 'Booking';
@@ -41,6 +43,7 @@ class Order extends Model
     { {
             $badges = [
                 $this::STATUS_BATAL => 'danger',
+                $this::STATUS_TIMEOUT => 'danger',
                 $this::STATUS_AKTID => 'primary',
                 $this::STATUS_MENUNGGU_PEMBAYARAN => 'warning',
                 $this::STATUS_MENUNGGU_PEMBAYARAN_SELESAI => 'primary',
@@ -60,5 +63,9 @@ class Order extends Model
     public function driver()
     {
         return $this->belongsTo(UserDriver::class, 'user_driver_id', 'id');
+    }
+    public function rating()
+    {
+        return $this->belongsTo(Rating::class, 'ratings_id', 'id');
     }
 }

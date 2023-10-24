@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Transaksi;
 
+use App\Models\Personil;
 use App\Models\Taxi\Order as TaxiOrder;
 use App\Models\Taxi\UserDriver;
 use Livewire\Component;
@@ -10,8 +11,7 @@ class Order extends Component
 {
     public $idBeingRemoved = null;
 
-
-    protected $listeners = ['updatedPaymentStatus' => 'updatedPaymentStatus'];
+    protected $listeners = ['updatedPaymentStatus' => 'updatedPaymentStatus', 'batalbooking' => 'batalbooking'];
 
     public function updatedPaymentStatus()
     {
@@ -21,6 +21,17 @@ class Order extends Component
         $order->save();
         // Optionally, you can emit a Livewire event to refresh the component or show a success message
         $this->dispatchBrowserEvent('alert', ['message' => 'Pembayaran berhasil! Terima kasih atas pesanan Anda.']);
+    }
+
+    public function batalbooking()
+    {
+        $latestOrder = TaxiOrder::latest()->with(['driver'])->where('user_id', auth()->user()->id)->first();
+        $order = $latestOrder;
+        $order->update([
+            'status' => 'Timeout',
+        ]);
+        // $user->delete();
+        $this->dispatchBrowserEvent('alert', ['message' => 'Booking anda otomatis di batalkan !']);
     }
 
     public function delete()
@@ -38,6 +49,7 @@ class Order extends Component
     public function confirmRemoval($id)
     {
         $this->idBeingRemoved = $id['id'];
+        // dd($this->idBeingRemoved);
         $this->dispatchBrowserEvent('show-delete-modal');
     }
 
@@ -56,6 +68,17 @@ class Order extends Component
         }
         return UserDriver::with(['user'])->where('id', $id)->first();
     }
+    public function getPersonilProperty()
+    {
+        // Periksa apakah $this->order adalah objek yang valid
+        if ($this->order instanceof Order) {
+            // Jika $this->order adalah objek Order, dapatkan personil terkait
+            return Personil::latest()->where('order_id', $this->order->id)->get();
+        }
+
+        // Jika $this->order bukan objek Order, kembalikan null atau koleksi kosong
+        return collect(); // Atau return null; tergantung pada kebutuhan Anda
+    }
     public function render()
     {
         $snapToken = null;
@@ -66,6 +89,6 @@ class Order extends Component
                 $driver = $this->Driver;
             }
         }
-        return view('livewire.transaksi.order', ['order' => $this->order, 'driver' => $driver, 'snapToken' => $snapToken]);
+        return view('livewire.transaksi.order', ['personils' => $this->personil, 'order' => $this->order, 'driver' => $driver, 'snapToken' => $snapToken]);
     }
 }

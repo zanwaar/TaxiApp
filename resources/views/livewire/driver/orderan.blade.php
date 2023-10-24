@@ -6,16 +6,20 @@
         @forelse ($order as $index => $bg)
         <div class="list-group mb-2">
             <div class="list-group-item list-group-item-action flex-column align-items-start">
+                <p> <small class="badge py-2 badge-{{ $bg->status_badge }} d-block d-sm-none">Status : {{$bg->status}}</small></p>
                 <div class="d-flex w-100 justify-content-between">
                     <h1 class="mb-1 text-muted">Layanan {{$bg->layanan}}</h1>
-                    <p> <small class="badge badge-pill badge-{{ $bg->status_badge }}">Status : {{$bg->status}}</small></p>
+
+                    <p> <small class="badge badge-pill badge-{{ $bg->status_badge }} d-none d-sm-block">Status : {{$bg->status}}</small></p>
                 </div>
                 <h3 class="mb-1 text-primary">Rute Taxi - {{$bg->rute}}</h3>
-                <p class="mb-1">Nama : {{$bg->user->name}} <span>No Tlpn {{$bg->notlpn}}</span></p>
+                <p class="mb-1">Nama Booking : {{$bg->user->name}} <span class="badge-dark rounded px-2 ml-2"> {{$bg->notlpn}}</span></p>
                 <p class="mb-1">Alamat, {{$bg->alamat}}, Jumlah Penumpang : {{$bg->jumlah_penumpang}} Orang</p>
-                <div class="d-flex w-100 justify-content-between">
-                    <small class="text-muted">Titik Penjemputan {{$bg->titikkor}} , <a href="https://www.google.com/maps/place/{{$bg->titikkor}}" target="_blank" class="text-info" rel="noopener noreferrer">Link Google Maps</a></small>
-                    @if ($bg->driver->aktif != 2)
+                <small class="text-muted">Titik Penjemputan {{$bg->titikkor}}</small>
+                <div class="d-flex w-100 justify-content-between mt-4">
+                    <small class="text-muted"><a href="https://www.google.com/maps/place/{{$bg->titikkor}}" target="_blank" class="text-info" rel="noopener noreferrer">Link Google Maps</a></small>
+
+                    @if ($bg->status != 'Terima')
                     <button wire:click="confirm({{ $bg }})" class="btn btn-primary btn-sm text-white">Terima Orderan</button>
                     @else
                     <button wire:click="confirmRemoval({{ $bg }})" class="btn btn-danger btn-sm text-white">Konfirmasi Selesai</button>
