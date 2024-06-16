@@ -32,6 +32,7 @@
                         </thead>
                         <tbody wire:loading.class="text-muted">
                             @forelse ($driver as $index => $bg)
+                            
                             <tr>
 
                                 <td>{{ $driver->firstItem() + $index }}</td>

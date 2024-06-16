@@ -63,7 +63,6 @@
             </ul>
         </nav>
         <div id="content">
-
             <div class="top-navbar bg-white">
                 <nav class="navbar navbar-expand-lg">
                     <div class="container-fluid ">

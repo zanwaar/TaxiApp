@@ -27,7 +27,7 @@ class Driver extends AppComponent
     public function deleteUser()
     {
         $user = User::findOrFail($this->idBeingRemoved);
-
+  
         $user->delete();
         $this->reset();
         $this->dispatchBrowserEvent('hide-delete-modal', ['message' => 'User deleted successfully!']);
